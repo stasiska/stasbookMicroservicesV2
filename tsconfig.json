@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@libs/cacheRedis": ["libs/cacheRedis/dist"],
+      "@libs/*": ["libs/*/src"]
+    }
+  }
+}
