@@ -10,6 +10,6 @@ export const authServiceGrpcClientOptions: ClientProviderOptions = {
         },
         package: ["user_service"],
         protoPath: path.join(__dirname, '../../src/_proto/auth_service.proto'),
-        url: 'auth-service:55011'
+        url: `${process.env.AUTH_SERVICE_URL}`
     }
 }

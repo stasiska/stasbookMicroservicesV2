@@ -3,7 +3,7 @@ global:
   scrape_interval: 5s
 
 scrape_configs:
-  - job_name: 'nest-app'
+  - job_name: 'api-gateway'
     metrics_path: /metrics
     static_configs:
-      - targets: ['nest-app:4001']
+      - targets: ['api-gateway:4001']

@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
     transport: Transport.RMQ,
     options: {
-      urls: ['amqp://rabbitmq:5672'],
+      urls: [`${process.env.NOTIFICATION_SERVICE_URL}`],
       queue: 'social_queue',
       queueOptions: {
         durable: true,

@@ -14,6 +14,6 @@ export const postServiceGrpcClientOptions: ClientProviderOptions = {
         },
         package: [POST_SERVICE_PACKAGE_NAME],
         protoPath: path.join(__dirname, '../../src/_proto/post_service.proto'),
-        url: 'post-service:55013' //почему то не могу прокинуть config.getOrThrow<string>('POST_SERVICE_URL')
+        url: `${process.env.POST_SERVICE_URL}` //почему то не могу прокинуть config.getOrThrow<string>('POST_SERVICE_URL')
     }
 }
