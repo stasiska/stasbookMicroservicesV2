@@ -1,9 +1,19 @@
-# prometheus/prometheus.yml
 global:
   scrape_interval: 5s
+  evaluation_interval: 5s
 
 scrape_configs:
   - job_name: 'api-gateway'
     metrics_path: /metrics
     static_configs:
       - targets: ['api-gateway:4001']
+        labels:
+          service: 'api-gateway'
+
+  - job_name: 'pushgateway'
+    honor_labels: true
+    static_configs: 
+      - targets: ['pushgateway:9091']
+    metric_relabel_configs:
+      - source_labels: [job]
+        target_label: service

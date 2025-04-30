@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import * as path from 'path';
+import { GrpcMetricsInterceptor } from './libs/common/grpc.metrics.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
@@ -17,6 +18,8 @@ async function bootstrap() {
       }
     }
   });
+  const metriicsInterceptor = app.get(GrpcMetricsInterceptor);
+  app.useGlobalInterceptors(metriicsInterceptor)
 
   await app.listen();
 }
