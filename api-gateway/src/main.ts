@@ -49,7 +49,10 @@ async function bootstrap() {
     exposedHeaders: ['set-cookie'],
   });
 
-  console.log(`API Gateway is running on ${config.getOrThrow<number>('APPLICATION_URL')}`);
+  const port = config.getOrThrow<number>('APPLICATION_PORT');
+  const url = config.getOrThrow<number>('APPLICATION_URL');
+  app.listen(port)
+  console.log(`API Gateway is running on ${url}`);
 
 }
 
