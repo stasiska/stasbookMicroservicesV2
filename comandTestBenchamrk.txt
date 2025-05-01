@@ -1,0 +1,3 @@
+ab -k -c 5 -n 4000 http://localhost:4001/post-service/a49c64e8-30c3-47ca-b59a-434da0c8d2f8http://localhost:4001/post-service/create
+ab -k -c 5 -n 2000 http://localhost:4001/post-service/a49c64e8-30c3-47ca-b59a-434da0c8d2f8
+ab -k -c 5 -n 2000 http://localhost:4001/post-service/a49c64e8-30c3-47ca-b59a-434da0c8d2f8
