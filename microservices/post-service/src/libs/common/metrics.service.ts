@@ -36,6 +36,6 @@ export class MetricsService {
   }
 
   public async pushMetrics() {
-    return this.pushgateway.pushAdd({ jobName: process.env.SERVICE_NAME || 'auth-service' });
+    return this.pushgateway.pushAdd({ jobName: process.env.SERVICE_NAME || 'post-service' });
   }
 }
