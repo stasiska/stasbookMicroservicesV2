@@ -2,7 +2,9 @@ import { CreatePostDto, Post, Posts } from "src/interface/post_service";
 import { PostsService } from "./posts.service";
 import { PrismaService } from "../prisma/prisma.service";
 import { Test, TestingModule } from "@nestjs/testing";
-
+import { CacheService } from "../libs/cacheRedis/src/cache.service";
+import { SocialServiceClientService } from "../grpc-client/social-service-client.service";
+import { of } from "rxjs"
 const mockPostData = {
   id: "10e45819-7f4d-482e-935a-c7e22fd51606",
   content: "stas noob in IT shok",
@@ -28,16 +30,18 @@ const mockPostsResponse: Posts = {
 
 const mockPost: Post = mockPostData;
 
-const dto: CreatePostDto = {
+const request: CreatePostDto = {
   content: 'post.content',
   mediaUrl: "hfsdkfh",
   mediaType: "string",
-  authorId: 'string',
+  authorId: '23223',
 };
 
 describe("Posts Service", () => {
   let service: PostsService;
   let prisma: PrismaService;
+  let cacheService: CacheService;
+  let socialServiceClientService: SocialServiceClientService ;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -52,12 +56,29 @@ describe("Posts Service", () => {
               create: jest.fn().mockResolvedValue(mockPost),
             }
           }
+        },
+        {
+          provide: CacheService,
+          useValue: {
+            get: jest.fn(),
+            set: jest.fn(),
+            del: jest.fn(),
+            addListFirstPosts: jest.fn()
+          }
+        },
+        {
+          provide: SocialServiceClientService,
+          useValue: {
+            getUserFriends: jest.fn().mockReturnValue(of({authorId: request.authorId, userIds: ['','']})),            
+          }
         }
       ],
     }).compile();
 
     service = module.get<PostsService>(PostsService);
     prisma = module.get<PrismaService>(PrismaService);
+    cacheService = module.get<CacheService>(CacheService);
+    socialServiceClientService = module.get<SocialServiceClientService>(SocialServiceClientService)
   });
 
   it('should be defined', () => {
@@ -75,7 +96,7 @@ describe("Posts Service", () => {
   });
 
   it('should create a new post', async () => {
-    const result = await service.createPost(dto);
+    const result = await service.createPost(request);
     expect(result).toEqual(mockPost);
   });
 });
