@@ -1,7 +1,7 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { DRIZZLE } from 'src/drizzle/drizzle.module';
-import { DrizzleDB } from 'src/drizzle/types/drizzle';
-import { MailService } from 'src/libs/mail/mail.service';
+import { DRIZZLE } from '../../drizzle/drizzle.module';
+import { DrizzleDB } from '../../drizzle/types/drizzle';
+import { MailService } from '../../libs/mail/mail.service';
 import * as schema from '../../drizzle/schema/schema';
 import { and, eq } from 'drizzle-orm';
 import { RpcException } from '@nestjs/microservices';

@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { DRIZZLE } from 'src/drizzle/drizzle.module';
-import { DrizzleDB } from 'src/drizzle/types/drizzle';
-import { MailService } from 'src/libs/mail/mail.service';
-import { UserService } from 'src/user/user.service';
+import { DRIZZLE } from '../../drizzle/drizzle.module';
+import { DrizzleDB } from '../../drizzle/types/drizzle';
+import { MailService } from '../../libs/mail/mail.service';
+import { UserService } from '../../user/user.service';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import { v4 as uuidv4 } from 'uuid'
 import { hash } from 'argon2';

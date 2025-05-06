@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { DRIZZLE } from 'src/drizzle/drizzle.module';
-import { DrizzleDB } from 'src/drizzle/types/drizzle';
+import { DRIZZLE } from '../drizzle/drizzle.module';
+import { DrizzleDB } from '../drizzle/types/drizzle';
 import * as schema from '../drizzle/schema/schema';
 import { eq } from 'drizzle-orm';
 import { CreateUserDto } from './dto/CreateUser.dto';
