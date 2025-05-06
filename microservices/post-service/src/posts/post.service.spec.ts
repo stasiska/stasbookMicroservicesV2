@@ -1,4 +1,4 @@
-import { CreatePostDto, Post, Posts } from "src/interface/post_service";
+import { CommentPostDto, CreatePostDto, LikePostDto, Post, Posts } from "src/interface/post_service";
 import { PostsService } from "./posts.service";
 import { PrismaService } from "../prisma/prisma.service";
 import { Test, TestingModule } from "@nestjs/testing";
@@ -13,7 +13,13 @@ const mockPostData = {
   updatedAt: new Date().toISOString(),
   media: [],
   likes: [],
-  comments: []
+  comments: [    {
+    id: 'comment-1',
+    userId: '',
+    postId: '',
+    text: '',
+    createdAt: new Date().toISOString(), 
+  }],
 };
 
 const mockPosts: Post[] = [
@@ -37,6 +43,20 @@ const request: CreatePostDto = {
   authorId: '23223',
 };
 
+const commentsPostDto: CommentPostDto = {
+  postId: "",
+  userId: "",
+  text: ""
+}
+
+const likePostDto: LikePostDto = {
+  postId: "",
+  userId: ""
+} 
+
+
+
+
 describe("Posts Service", () => {
   let service: PostsService;
   let prisma: PrismaService;
@@ -54,6 +74,20 @@ describe("Posts Service", () => {
               findMany: jest.fn().mockResolvedValue(mockPosts),
               findUnique: jest.fn().mockResolvedValue(mockPost),
               create: jest.fn().mockResolvedValue(mockPost),
+              findFirst: jest.fn().mockResolvedValue(mockPost),
+            },
+            comment: {
+              findMany: jest.fn().mockResolvedValue(mockPosts),
+              findUnique: jest.fn().mockResolvedValue(mockPost),
+              create: jest.fn().mockResolvedValue(mockPost),
+              findFirst: jest.fn().mockResolvedValue(mockPost),
+            },
+            like: {
+              findMany: jest.fn().mockResolvedValue(mockPosts),
+              findUnique: jest.fn().mockResolvedValue(mockPost),
+              create: jest.fn().mockResolvedValue(mockPost),
+              findFirst: jest.fn().mockResolvedValue(mockPost),
+              delete: jest.fn().mockResolvedValue({})
             }
           }
         },
@@ -99,4 +133,14 @@ describe("Posts Service", () => {
     const result = await service.createPost(request);
     expect(result).toEqual(mockPost);
   });
+
+  it('should return a post with new comment', async () => {
+    const result = await service.commentPost(commentsPostDto);
+    expect(result).toEqual(mockPost);
+  })
+
+  it('should return a post with new like', async () => {
+    const result = await service.likePost(likePostDto);
+    expect(result).toEqual(mockPost);
+  })
 });

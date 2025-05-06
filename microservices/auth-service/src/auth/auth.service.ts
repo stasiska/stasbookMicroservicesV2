@@ -1,8 +1,8 @@
 import { ConflictException, Inject, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { DRIZZLE } from 'src/drizzle/drizzle.module';
-import { DrizzleDB, User } from 'src/drizzle/types/drizzle';
-import { UserService } from 'src/user/user.service';
+import { DRIZZLE } from '../drizzle/drizzle.module';
+import { DrizzleDB, User } from '../drizzle/types/drizzle';
+import { UserService } from '../user/user.service';
 import { ProviderService } from './provider/provider.service';
 import { Request, Response } from 'express';
 import { RegisterDto } from './dto/register.dto';

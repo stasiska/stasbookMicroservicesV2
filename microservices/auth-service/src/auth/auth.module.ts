@@ -4,11 +4,11 @@ import { AuthController } from './auth.controller';
 import { PasswordRecoveryModule } from './password-recovery/password-recovery.module';
 import { ProviderModule } from './provider/provider.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { getProvidersConfig } from 'src/config/providers.config';
-import { DrizzleModule } from 'src/drizzle/drizzle.module';
+import { getProvidersConfig } from '../config/providers.config';
+import { DrizzleModule } from '../drizzle/drizzle.module';
 import { EmailConfirmationModule } from './email-confirmation/email-confirmation.module';
-import { UserService } from 'src/user/user.service';
-import { MailService } from 'src/libs/mail/mail.service';
+import { UserService } from '../user/user.service';
+import { MailService } from '../libs/mail/mail.service';
 import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
 
 @Module({

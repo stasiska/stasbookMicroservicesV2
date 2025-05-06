@@ -1,8 +1,8 @@
 import { BadRequestException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { DRIZZLE } from 'src/drizzle/drizzle.module';
-import { DrizzleDB } from 'src/drizzle/types/drizzle';
-import { MailService } from 'src/libs/mail/mail.service';
-import { UserService } from 'src/user/user.service';
+import { DRIZZLE } from '../../drizzle/drizzle.module';
+import { DrizzleDB } from '../../drizzle/types/drizzle';
+import { MailService } from '../../libs/mail/mail.service';
+import { UserService } from '../../user/user.service';
 import { AuthService } from '../auth.service';
 import { Request } from 'express';
 import { ConfirmationDto } from './dto/confirmation.dto';
