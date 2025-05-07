@@ -49,7 +49,6 @@ export class PostsService {
         const postFromCache: Post = await this.cacheService.get(request.postId)
         if (postFromCache) {
             console.log('hello from redis')
-            this.logger.error('post with mama not found','','getPostById')
             return postFromCache;
         }
         const post = await this.prismaService.post.findUnique({
