@@ -16,7 +16,7 @@ import { PrometheusModule } from '@willsoto/nestjs-prometheus';
     isGlobal: true
   }), PrometheusModule.register({
     pushgateway: {
-      url: 'http://pushgateway:9091' ,
+      url: 'http://localhost:9091'// for prod 'http://pushgateway:9091',
     },
     defaultLabels: {
       service: "auth-service"

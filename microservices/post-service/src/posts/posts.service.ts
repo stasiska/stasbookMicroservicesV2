@@ -4,11 +4,10 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CommentPostDto, CreatePostDto, GetPostByIdDto, GetPostByUserIdDto, LikePostDto, PaginationDto, Post, Posts } from '../interface/post_service';
 import { MediaType } from '../../prisma/__generated__';
 import { mapManyPosts, mapPost } from '../libs/mapper/post.mapper';
-//import { GrpcConflict, GrpcNotFound } from '@lib/shared/dist/index';
-//import { LoggerService } from '@lib/logger/dist'; 
 import { CacheService } from '../libs/cacheRedis/src/cache.service';
 import { firstValueFrom } from 'rxjs';
 import { SocialServiceClientService } from '../grpc-client/social-service-client.service';
+import { CustomLogger } from 'src/libs/common/logger/logger.service';
 
 @Injectable()
 export class PostsService {
@@ -16,7 +15,8 @@ export class PostsService {
     public constructor(private prismaService: PrismaService,
     //private readonly logger: LoggerService,
     private readonly cacheService: CacheService,
-    private readonly sociaiServiceClient: SocialServiceClientService
+    private readonly sociaiServiceClient: SocialServiceClientService,
+    private readonly logger: CustomLogger
 ){}
 
     async createPost (request: CreatePostDto) {
@@ -41,7 +41,6 @@ export class PostsService {
 
         await firstValueFrom(this.sociaiServiceClient.getUserFriends({userId: request.authorId}))
 
-
         return mapPost(post)
     }
 
@@ -50,6 +49,7 @@ export class PostsService {
         const postFromCache: Post = await this.cacheService.get(request.postId)
         if (postFromCache) {
             console.log('hello from redis')
+            this.logger.error('post with mama not found','','getPostById')
             return postFromCache;
         }
         const post = await this.prismaService.post.findUnique({
@@ -67,6 +67,8 @@ export class PostsService {
         //     this.logger.error(`Post with id ${request.postId} not found`, ' ', "PostService")
         //     throw GrpcNotFound(`Post with id ${request.postId} not found`)
         // }
+        this.logger.log('Post get with id lala', 'getPostById')
+
        const cachedPost = await this.cacheService.set(request.postId, JSON.stringify(mapPost(post)))
         return mapPost(post)
     }
