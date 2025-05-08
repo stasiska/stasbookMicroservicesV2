@@ -11,7 +11,7 @@ import { GrpcMetricsInterceptor } from './libs/common/grpc.metrics.interceptor';
     isGlobal: true
   }), PrometheusModule.register({
     pushgateway: {
-      url: 'http://localhost:9091'// for prod 'http://pushgateway:9091'
+      url: process.env.NODE_DEV == 'true' ? 'http://localhost:9091' :  'http://pushgateway:9091'
     },
     defaultLabels: {
       service: "post-service"

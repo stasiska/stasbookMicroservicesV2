@@ -8,7 +8,8 @@ import { ConfirmationDto } from './dto/email-confirmation.dto';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly authServiceClientService: AuthServiceClientService) { }
+    constructor(private readonly authServiceClientService: AuthServiceClientService
+    ) { }
 
     async getUserById(id: string) {
         return await firstValueFrom(this.authServiceClientService.getUserById({ id: id }))
@@ -135,5 +136,21 @@ export class AuthService {
                 statusCode: "Err"
             }
         }
+    }
+
+    async deleteUserById(id: string) {
+        // try {
+        //     const res = await firstValueFrom(this.authServiceClientService.deleteUserById({id: id}))
+        //     return res
+        // }catch(err) {
+        //     return {
+        //         code: 404,
+        //         message: err,
+        //         statusCode: "Err"
+        //     }
+        // }
+
+        const res = await firstValueFrom(this.authServiceClientService.deleteUserById({id: id}))
+        return res
     }
 }

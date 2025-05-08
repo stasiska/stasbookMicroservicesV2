@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Param, Post, Query, Req, Res, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, InternalServerErrorException, Param, Post, Query, Req, Res, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Request, Response } from "express";
 import { RegisterDto } from "./dto/register.dto";
@@ -78,4 +78,10 @@ export class AuthContoller {
         console.log(file.buffer)
     }
 
+
+    @Delete('user/:id')
+    async deleteUserById(@Param('id') id: string) {
+        const res = await this.authService.deleteUserById(id)
+        return res
+    }
 }

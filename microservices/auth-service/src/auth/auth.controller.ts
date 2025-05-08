@@ -25,6 +25,12 @@ export class AuthController implements AuthServiceController {
     readonly passwordRecoveryService: PasswordRecoveryService,
   ) { }
 
+  @GrpcMethod('AuthService', 'DeleteUserById')
+  deleteUserById(request: FindOneUserByIdDto): Promise<Boolean> | Observable<Boolean> | Boolean {
+    const res  = this.authService.deleteUserById(request.id)
+    return res;
+  }
+
   @GrpcMethod('AuthService', "PasswordReset")
   passwordReset(request: resetPasswordDto): Promise<Boolean> | Observable<Boolean> | Boolean {
     const res = this.passwordRecoveryService.resetPassword(request)

@@ -144,4 +144,9 @@ export class AuthService {
         return user
     }
     
+
+    public async deleteUserById(id: string) {
+        const res = await this.userService.deleteUserById(id)
+        return {bool: res}
+    }
 }

@@ -32,7 +32,7 @@ export class MetricsService {
       registers: [this.registry],
     });
 
-    this.pushgateway = new Pushgateway(process.env.PUSHGATEWAY_URL || 'http://pushgateway:9091', undefined, this.registry);
+    this.pushgateway = new Pushgateway('http://localhost:9091', undefined, this.registry);
   }
 
   public async pushMetrics() {

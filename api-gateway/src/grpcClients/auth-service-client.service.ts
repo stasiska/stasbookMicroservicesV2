@@ -8,6 +8,10 @@ export class AuthServiceClientService implements AuthServiceClient, OnModuleInit
     private authServiceClient: AuthServiceClient;
 
     constructor(@Inject(USER_SERVICE_PACKAGE_NAME) private client: ClientGrpc) {}
+    deleteUserById(request: FindOneUserByIdDto): Observable<Boolean> {
+        return this.authServiceClient.deleteUserById(request);
+
+    }
     passwordReset(request: resetPasswordDto): Observable<Boolean> {
         return this.authServiceClient.passwordReset(request);
     }
@@ -38,6 +42,6 @@ export class AuthServiceClientService implements AuthServiceClient, OnModuleInit
     }
 
     onModuleInit(): void {
-    this.authServiceClient = this.client.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
+        this.authServiceClient = this.client.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
     }
 } 

@@ -51,4 +51,13 @@ export class UserService {
 
         return user[0]
     }
+
+    public async deleteUserById(id: string)  {
+        const user = await this.db.delete(schema.users).where(eq(schema.users.id, id)).returning()
+        if (!user[0]) {
+            throw new RpcException('Пользователь не найден. Пожалуйста, проверте входные данные.')
+        }
+
+        return true
+    }   
 }

@@ -74,7 +74,6 @@ export class PostsService {
 
 
     async getPostByUserId(request: GetPostByUserIdDto) {
-        console.log(request)
         const post = await this.prismaService.post.findMany({
             where: {
                 authorId: request.authorId
