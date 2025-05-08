@@ -8,6 +8,7 @@ import RedisStore from 'connect-redis';
 import { default as IORedis } from 'ioredis'
 import { ms, StringValue } from './libs/common/utils/ms.util';
 import { parseBoolean } from './libs/common/utils/parse-boolean.util';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +18,15 @@ async function bootstrap() {
   
   app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')));
 
+  const configSwagger = new DocumentBuilder()
+    .setTitle('StasBook API gateway')
+    .setDescription('The Stasbook api for use microservices')
+    .setVersion('1.0')
+    .build();
+
+  const documentFactory = () => SwaggerModule.createDocument(app, configSwagger);
+  SwaggerModule.setup('api', app, documentFactory)
+  
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
