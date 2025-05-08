@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import * as path from 'path';
 import { GrpcMetricsInterceptor } from './libs/common/grpc.metrics.interceptor';
+import { CustomLogger } from './libs/common/logger/logger.service';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
@@ -18,6 +19,8 @@ async function bootstrap() {
       }
     }
   });
+
+  app.useLogger(new CustomLogger());
   const metriicsInterceptor = app.get(GrpcMetricsInterceptor);
   app.useGlobalInterceptors(metriicsInterceptor)
   await app.listen();

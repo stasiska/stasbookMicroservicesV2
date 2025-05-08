@@ -13,6 +13,7 @@ import * as schema from '../drizzle/schema/schema';
 import { and, eq, sql } from 'drizzle-orm';
 import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
 import { RpcException } from '@nestjs/microservices';
+import { CustomLogger } from 'src/libs/common/logger/logger.service';
 
 
 @Injectable()
@@ -24,6 +25,7 @@ export class AuthService {
         private readonly provderSerivce: ProviderService,
         private readonly emailConfirmationService: EmailConfirmationService,
         private readonly twoFactorAuthService: TwoFactorAuthService,
+        private readonly logger: CustomLogger
     ) { }
 
     

@@ -6,19 +6,36 @@ import { ConfirmationDto } from "./dto/email-confirmation.dto";
 import { AuthGuard } from "../guards/auth.guard";
 import { Authorized } from "./decorators/authorized.decorator";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { LoginDto } from "./dto/login.dto";
+import { ApiBody, ApiOperation, ApiResponse } from "@nestjs/swagger";
 
 @Controller('auth-service')
 export class AuthContoller {
     constructor(private readonly authService: AuthService) { }
 
+    @ApiResponse({
+        status: 200,
+        description: 'вывод пользователя по id',
+    })
+    @ApiOperation({
+        description: 'Получение пользователя по id.',
+    })
     @Get('user/:id')
     async getUserById(@Param('id') id: string) {
         const user = await this.authService.getUserById(id)
         return user
     }
 
+    @ApiOperation({
+        description: 'Авторизация пользователя.',
+    })
+    @ApiBody({
+        description: 'Авторизация пользователя',
+        type: LoginDto,
+        required: true
+    })
     @Post('login')
-    async login(@Body() dto: any, @Req() req: Request) {
+    async login(@Body() dto: LoginDto, @Req() req: Request) {
         return this.authService.login(dto, req)
     }
 
@@ -27,6 +44,20 @@ export class AuthContoller {
         return this.authService.logout(req, res)
     }
 
+    @ApiBody({
+        description: 'Регистрация пользователя',
+        type: RegisterDto,
+        required: true
+    })
+    @ApiResponse({
+        status: 201,
+        description: 'На ваш адрес электронной почты было отправлено письмо с подтверждением регистрации.',
+        type: RegisterDto
+    })
+    @ApiOperation({
+        summary: 'Регистрация пользователя',
+        description: 'Регистрация пользователя с отправкой письма на почту для подтверждения регистрации.'
+    })
     @Post('registration')
     async registration(@Body() dto: RegisterDto) {
         return this.authService.registration(dto)
