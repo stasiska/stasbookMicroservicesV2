@@ -12,7 +12,9 @@ service AuthService {
     rpc EmailConfirmation (emailConfirmationDto) returns (FindOneUserByIdDto);
     rpc PasswordReset (resetPasswordDto) returns (Boolean);
     rpc PasswordNew (passwordDto) returns (Boolean);
+    rpc DeleteUserById(FindOneUserByIdDto) returns (Boolean);
 }
+
 
 message Boolean {
     bool bool = 1;

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
@@ -101,6 +100,8 @@ export interface AuthServiceClient {
   passwordReset(request: resetPasswordDto): Observable<Boolean>;
 
   passwordNew(request: passwordDto): Observable<Boolean>;
+
+  deleteUserById(request: FindOneUserByIdDto): Observable<Boolean>;
 }
 
 export interface AuthServiceController {
@@ -123,6 +124,8 @@ export interface AuthServiceController {
   passwordReset(request: resetPasswordDto): Promise<Boolean> | Observable<Boolean> | Boolean;
 
   passwordNew(request: passwordDto): Promise<Boolean> | Observable<Boolean> | Boolean;
+
+  deleteUserById(request: FindOneUserByIdDto): Promise<Boolean> | Observable<Boolean> | Boolean;
 }
 
 export function AuthServiceControllerMethods() {
@@ -137,6 +140,7 @@ export function AuthServiceControllerMethods() {
       "emailConfirmation",
       "passwordReset",
       "passwordNew",
+      "deleteUserById",
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
