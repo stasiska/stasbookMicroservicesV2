@@ -5,6 +5,8 @@ import { PostsModule } from './posts/posts.module';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { MetricsService } from './libs/common/metrics.service';
 import { GrpcMetricsInterceptor } from './libs/common/grpc.metrics.interceptor';
+import { ScheduleModule } from '@nestjs/schedule';
+
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -16,7 +18,7 @@ import { GrpcMetricsInterceptor } from './libs/common/grpc.metrics.interceptor';
     defaultLabels: {
       service: "post-service"
     },
-  }), PostsModule ,PrismaModule],
+  }), ScheduleModule.forRoot() , PostsModule ,PrismaModule],
   controllers: [],
   providers: [
     MetricsService,
