@@ -13,7 +13,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     isGlobal: true
   }), PrometheusModule.register({
     pushgateway: {
-      url: process.env.NODE_DEV == 'true' ? 'http://localhost:9091' :  'http://pushgateway:9091'
+      url: process.env.NODE_DEV == 'true' ? 'http://localhost:9091' :'http://pushgateway:9091'
     },
     defaultLabels: {
       service: "post-service"

@@ -14,6 +14,6 @@ export const postServiceGrpcClientOptions: ClientProviderOptions = {
         },
         package: [POST_SERVICE_PACKAGE_NAME],
         protoPath: path.join(__dirname, '../../src/_proto/post_service.proto'),
-        url: 'localhost:55013' // fpr prod `${process.env.POST_SERVICE_URL}`
+        url: `${process.env.POST_SERVICE_URL}`
     }
 }

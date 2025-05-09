@@ -3,6 +3,7 @@ import { Cron } from "@nestjs/schedule";
 import { CustomLogger } from "src/libs/common/logger/logger.service";
 import { PrismaService } from "src/prisma/prisma.service";
 import { PrismaReplicaService } from "src/prisma/prismaReplica.service";
+import * as crypto from 'crypto';
 
 @Injectable()
 export class ReplicationService {
@@ -12,7 +13,9 @@ export class ReplicationService {
         private readonly customLogger: CustomLogger,
     ) { }
 
-    @Cron("*/5 * * * *")
+    @Cron("*/5 * * * *", {
+        name: `replication-${crypto.randomUUID()}`,
+    })
     async replicate() {
         this.customLogger.log("Replication started", 'replication.service');
         const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
