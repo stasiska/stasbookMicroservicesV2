@@ -5,12 +5,13 @@ import { PostModule } from './post/post.module';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './libs/common/logging.interceptor';
+import { SocialModule } from './social/social.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true
   }),
-  PrometheusModule.register(), AuthModule, PostModule],
+  PrometheusModule.register(), AuthModule, PostModule, SocialModule],
   controllers: [],
   providers: [{
     provide: APP_INTERCEPTOR,

@@ -9,7 +9,6 @@ export class NotificationController {
   @EventPattern('social.post.created')
   async handleFriendPostNotification(@Payload() data: any) {
     const { authorId, userIds} = data
-
     for (const userId of userIds) {
       console.log(`📢 Пользователю ${userId}: Ваш друг ${authorId} создал пост`)
     }

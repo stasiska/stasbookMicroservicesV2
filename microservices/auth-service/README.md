@@ -1,5 +1,18 @@
-<h1> Auth-service for stasbook </h1>
-## Description
+```markdown
+# Auth Service
+
+Manages user identity:
+
+- Session-based login (stored in Redis)
+- OAuth2 via Google/Yandex
+- Email verification & password reset (SMTP via Mailhog)
+
+
+## Features
+
+- Redis for session store
+- SMTP mailer
+- OAuth2 integration
 
 ## Project setup
 
@@ -50,11 +63,6 @@ $ npm run start
 $ npm run start:dev
 
 ```
-
-## Tech Stack
-
-**NestJS**: Framework for building auth-service.
-**DRIZZLEORM**
 
 
 ## Stay in touch

@@ -35,7 +35,7 @@ export class SocialService {
             authorId: request.userId,
             userIds: listFriend
         })
-
+        console.log('emit good send')
         return {
             authorId: request.userId,
             userIds: listFriend

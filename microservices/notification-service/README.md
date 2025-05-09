@@ -1,5 +1,10 @@
-<h1> social-service for stasbook </h1>
-## Description
+```markdown
+# Notification Service
+
+Consumes queues and sends updates to users.
+
+- RabbitMQ consumer
+- Handles push/email/in-app notifications
 
 ## Project setup
 
@@ -23,11 +28,6 @@ $ npm run start
 $ npm run start:dev
 
 ```
-
-## Tech Stack
-
-**NestJS**: Framework for building so -service.
-
 
 ## Stay in touch
 

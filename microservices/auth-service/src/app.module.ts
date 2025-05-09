@@ -17,7 +17,7 @@ import { CustomLogger } from './libs/common/logger/logger.service';
     isGlobal: true
   }), PrometheusModule.register({
     pushgateway: {
-      url:  'http://pushgateway:9091'
+      url:  process.env.NODE_ENV == 'true' ? 'http://localhost:9091' :'http://pushgateway:9091'
     },
     defaultLabels: {
       service: "auth-service"

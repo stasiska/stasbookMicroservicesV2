@@ -5,7 +5,7 @@ import { ConfigService } from "@nestjs/config";
 export const getProvidersConfig = async (
     configService: ConfigService
 ): Promise<TypeOptions> => ({
-    baseUrl: configService.getOrThrow<string>('APPLICATION_URL'),
+    baseUrl:'http://localhost:4001', //configService.getOrThrow<string>('APPLICATION_URL'),
     services: [
         new GoogleProvider({
             client_id: configService.getOrThrow<string>('GOOGLE_CLIENT_ID'),
