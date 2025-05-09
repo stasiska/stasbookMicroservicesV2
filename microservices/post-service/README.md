@@ -1,5 +1,18 @@
-<h1> post-service for stasbook </h1>
-## Description
+```markdown
+# Post Service
+
+Handles user-generated posts with:
+
+- S3 for media storage
+- Redis cache for faster post feeds
+- gRPC-based object mappers for data formatting
+
+## Highlights
+
+- Image uploads to S3
+- Cached batch post responses
+- Integrated with Social Service for notifications
+- Communication with SOCIAL-SERVICE <delete events>
 
 ## Project setup
 
@@ -31,11 +44,6 @@ $ npm run start
 $ npm run start:dev
 
 ```
-
-## Tech Stack
-
-**NestJS**: Framework for building post-service.
-
 
 ## Stay in touch
 

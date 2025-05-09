@@ -2,9 +2,9 @@ import { POST_SERVICE_PACKAGE_NAME } from '../post/types/post_service';
 import { ClientProviderOptions, Transport } from '@nestjs/microservices';
 import * as path from 'path';
 import { ConfigService } from '@nestjs/config';
-
+import * as dotenv from 'dotenv'
+dotenv.config()
 const config = new ConfigService();
-//console.log(config.getOrThrow<string>('AUTH_SERVICE_URL'))
 export const postServiceGrpcClientOptions: ClientProviderOptions = {
     name: POST_SERVICE_PACKAGE_NAME,
     transport: Transport.GRPC,

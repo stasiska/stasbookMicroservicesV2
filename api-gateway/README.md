@@ -1,5 +1,11 @@
-<h1> api-gateway for stasbook </h1>
-## Description
+```markdown
+# API Gateway
+
+Acts as the entry point to all backend services. It handles:
+
+- Authentication/Authorization Guards
+- Role-based access control
+- Routing to internal microservices via gRPC
 
 ## Project setup
 
@@ -52,11 +58,6 @@ $ npm run start
 $ npm run start:dev
 
 ```
-
-## Tech Stack
-
-**NestJS**: Framework for building api-gateway.
-
 
 ## Stay in touch
 

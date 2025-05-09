@@ -1,5 +1,16 @@
-<h1> social-service for stasbook </h1>
-## Description
+```markdown
+# Social Service
+
+Responsible for:
+
+- Friends, Likes, Comments
+- RabbitMQ producer for user activity
+- Database indexing for performance
+
+## Relations
+
+- Sends notifications to Notification Service
+- Depends on Post Service for content linkage
 
 ## Project setup
 
@@ -24,11 +35,6 @@ $ npm run start
 $ npm run start:dev
 
 ```
-
-## Tech Stack
-
-**NestJS**: Framework for building so -service.
-
 
 ## Stay in touch
 

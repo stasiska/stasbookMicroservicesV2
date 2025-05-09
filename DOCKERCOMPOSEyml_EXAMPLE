@@ -1,0 +1,210 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "4001:4001"
+    environment:
+      NODE_ENV: 'false'
+      APPLICATION_PORT: 4001
+      APPLICATION_URL: http://api-gateway:4001
+      ALLOWED_ORIGIN: http://localhost:3000
+      AUTH_SERVICE_URL: auth-service:55011
+      POST_SERVICE_URL: post-service:55013
+      SOCIAL_SERVICE_URL: social-service:55014
+      COOKIES_SECRET: secret
+      SESSION_SECRET: sercret
+      SESSION_NAME: session
+      SESSION_DOMAIN: localhost
+      SESSION_MAX_AGE: 30d
+      SESSION_HTTP_ONLY: "true"
+      SESSION_SECURE: "false"
+      REDIS_USER: default
+      REDIS_PASSWORD: pass1234
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_URI: redis://default:pass1234@redis:6379
+      S3_ENDPOINT: 
+      S3_REGION: 
+      S3_ACCESS_KEY_ID:
+      S3_SECRET_ACCESS_KEY:
+      S3_BUCKET_NAME: 
+      S3_GET_STATIC: 
+    depends_on:
+      - redis
+    networks:
+      - monitoring
+      - backend
+
+  auth-service:
+    build: ./microservices/auth-service
+    container_name: auth-service
+    ports:
+      - "55011:55011"
+    environment:
+      NODE_ENV: 'false'
+      AUTH_SERVICE_PORT: "55011"
+      AUTH_SERVICE_URL: auth-service:55011
+      APPLICATION_PORT: "4001"
+      APPLICATION_URL: http://api-gateway:4001
+      ALLOWED_ORIGIN: http://localhost:3000
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: "1234"
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5433"
+      POSTGRES_DB: stasbook
+      POSTGRES_URI: postgresql://root:1234@postgres:5432/stasbook
+      MAIL_HOST: mailhog
+      MAIL_PORT: "1025"
+      MAIL_LOGIN: "null"
+      MAIL_PASSWORD: "null"
+      GOOGLE_RECAPTCHA_SECRET_KEY:
+      GOOGLE_CLIENT_ID:
+      GOOGLE_CLIENT_SECRET:
+      YANDEX_CLIENT_ID: 
+      YANDEX_CLIENT_SECRET:
+    depends_on:
+      - postgres
+      - mailhog
+      - pushgateway
+    networks:
+      - backend
+      - monitoring
+
+  post-service:
+    build: ./microservices/post-service
+    container_name: post-service
+    ports:
+      - "55013:55013"
+    environment:
+      NODE_ENV: 'false'
+      POST_SERVICE_URL: post-service
+      POST_SERVICE_PORT: "55013"
+      SOCIAL_SERVICE_PORT: "55014"
+      SOCIAL_SERVICE_URL: social-service
+      POSTGRES_URI: postgresql://root:1234@postgres:5432/stasbookposts
+      POSTGRES_URL_REPLICA: postgresql://root:1234@postgres:5432/stasbookbackup
+      S3_ENDPOINT:
+      S3_REGION: 
+      S3_ACCESS_KEY_ID: ""
+      S3_SECRET_ACCESS_KEY: ""
+      S3_BUCKET_NAME: stasbook-storage
+    depends_on:
+      - postgres
+      - pushgateway
+    networks:
+      - backend
+      - monitoring
+
+
+  social-service:
+    build: ./microservices/social-service
+    container_name: social-service
+    ports:
+      - "55014:55014"
+    environment:
+      NODE_ENV: 'false'
+      SOCIAL_SERVICE_URL: social-service
+      SOCIAL_SERVICE_PORT: "55014"
+      DATABASE_URL: postgresql://root:1234@postgres:5432/stasbooksocial
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  notification-service:
+    build: ./microservices/notification-service
+    container_name: notification-service
+    environment:
+      NODE_ENV: 'false'
+      NODE_DEV: "true"
+      NOTIFICATION_SERVICE_URL: amqp://rabbitmq:5672
+      NOTIFICATION_SERVICE_PORT: "5672"
+    depends_on:
+      - rabbitmq
+    networks:
+      - backend
+
+  postgres:
+    image: postgres:13
+    container_name: postgresBook
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=stasbook
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  redis:
+    image: redis:alpine
+    container_name: redisService
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - monitoring
+      - backend
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+  pushgateway:
+      image: prom/pushgateway
+      ports:
+        - "9091:9091"
+      networks:
+        - monitoring
+
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - monitoring
+
+volumes:
+  grafana-data:
+  redis_data:
+  postgres_data:
+
+networks:
+  monitoring:
+    driver: bridge
+  backend:
+    driver: bridge

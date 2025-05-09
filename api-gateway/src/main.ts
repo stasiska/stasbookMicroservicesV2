@@ -64,5 +64,4 @@ async function bootstrap() {
   app.listen(port)
   console.log(`API Gateway is running on ${url}`);
 }
-
 bootstrap();
