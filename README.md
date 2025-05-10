@@ -5,6 +5,7 @@
 </p>
 
 ---
+
 <a href="https://github.com/stasiska/stasbookrepo/blob/main/nestjsmicroservice.png"><strong>Explore the docs »</strong></a>
 
 ## 🧩 Description
@@ -19,6 +20,7 @@ The system is fully containerized with **Docker**, and each service is monitored
 
 ![System Design](https://github.com/stasiska/stasbookrepo/blob/main/nestjsmicroservice.png?raw=true)
 
+---
 
 ## 🛠 Tech Stack
 
@@ -32,6 +34,8 @@ The system is fully containerized with **Docker**, and each service is monitored
 - **Authentication**: Session-based, OAuth2 (Google/Yandex), Mail (SMTP via Mailhog)
 - **Containerization**: Docker, Docker Compose
 - **CRON**: Scheduled DB replication
+
+---
 
 ## 📊 Monitoring
 
@@ -50,34 +54,41 @@ You can track events such as:
 
 All components are containerized and available in the `docker-compose.ymlEXZAMPLE`.
 
+---
 
+## 🔁 CI/CD Pipelines
 
-## Setup project
+Each microservice in **Stasbook** is integrated with CI/CD pipelines for fast feedback and quality control:
 
-# 🔧 Environment Setup
+- ✅ **Linting**, **unit tests**, and **build checks** run on every PR
+- 🐳 Docker builds and caching ensure consistent environments
+- 🧪 Test coverage reporting helps enforce code quality
+- ⚙️ Future deployment pipelines (e.g., staging/production) can be integrated via GitHub Actions or other CI tools
 
-[api-gateway](https://github.com/stasiska/stasbookrepo/tree/main/apps/api-gateway)
+> The pipeline is configured to validate each service individually, ensuring independence and modularity across the architecture.
 
-[auth-service](https://github.com/stasiska/stasbookrepo/tree/main/apps/auth-service)
+---
 
-[post-service](https://github.com/stasiska/stasbookrepo/tree/main/apps/post-service)
+## 🧪 Setup Project
 
-[social-service](https://github.com/stasiska/stasbookrepo/tree/main/apps/social-service)
+### Environment Setup
 
-[notification-service](https://github.com/stasiska/stasbookrepo/tree/main/apps/notification-service)
+- [api-gateway](https://github.com/stasiska/stasbookrepo/tree/main/apps/api-gateway)
+- [auth-service](https://github.com/stasiska/stasbookrepo/tree/main/apps/auth-service)
+- [post-service](https://github.com/stasiska/stasbookrepo/tree/main/apps/post-service)
+- [social-service](https://github.com/stasiska/stasbookrepo/tree/main/apps/social-service)
+- [notification-service](https://github.com/stasiska/stasbookrepo/tree/main/apps/notification-service)
 
+---
 
 ## 🚀 Getting Started
-
-### Clone the repo
 
 ```bash
 git clone https://github.com/stasiska/stasbookrepo.git
 cd stasbookrepo
- 
+
 ```
 
 ## Stay in touch!!!
 
 - Author - stasika
-
