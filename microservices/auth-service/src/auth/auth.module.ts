@@ -10,7 +10,7 @@ import { EmailConfirmationModule } from './email-confirmation/email-confirmation
 import { UserService } from '../user/user.service';
 import { MailService } from '../libs/mail/mail.service';
 import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
-import { CustomLogger } from 'src/libs/common/logger/logger.service';
+import { CustomLogger } from '../libs/common/logger/logger.service';
 
 @Module({
   imports: [

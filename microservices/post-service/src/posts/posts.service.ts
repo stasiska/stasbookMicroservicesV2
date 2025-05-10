@@ -7,7 +7,7 @@ import { mapManyPosts, mapPost } from '../libs/mapper/post.mapper';
 import { CacheService } from '../libs/cacheRedis/src/cache.service';
 import { firstValueFrom } from 'rxjs';
 import { SocialServiceClientService } from '../grpc-client/social-service-client.service';
-import { CustomLogger } from 'src/libs/common/logger/logger.service';
+import { CustomLogger } from '../libs/common/logger/logger.service';
 
 @Injectable()
 export class PostsService {

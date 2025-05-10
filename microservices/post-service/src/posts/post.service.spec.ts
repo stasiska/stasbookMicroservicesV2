@@ -5,6 +5,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { CacheService } from "../libs/cacheRedis/src/cache.service";
 import { SocialServiceClientService } from "../grpc-client/social-service-client.service";
 import { of } from "rxjs"
+import { CustomLogger } from "../libs/common/logger/logger.service";
 const mockPostData = {
   id: "10e45819-7f4d-482e-935a-c7e22fd51606",
   content: "stas noob in IT shok",
@@ -62,7 +63,7 @@ describe("Posts Service", () => {
   let prisma: PrismaService;
   let cacheService: CacheService;
   let socialServiceClientService: SocialServiceClientService ;
-
+  let customLogger: CustomLogger;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -105,7 +106,17 @@ describe("Posts Service", () => {
           useValue: {
             getUserFriends: jest.fn().mockReturnValue(of({authorId: request.authorId, userIds: ['','']})),            
           }
-        }
+        },
+        {
+      provide: CustomLogger,
+      useValue: {
+        log: jest.fn(),
+        error: jest.fn(),
+        warn: jest.fn(),
+        debug: jest.fn(),
+        verbose: jest.fn(),
+      }
+    }
       ],
     }).compile();
 
