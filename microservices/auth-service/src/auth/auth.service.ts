@@ -13,7 +13,7 @@ import * as schema from '../drizzle/schema/schema';
 import { and, eq, sql } from 'drizzle-orm';
 import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
 import { RpcException } from '@nestjs/microservices';
-import { CustomLogger } from 'src/libs/common/logger/logger.service';
+import { CustomLogger } from '../libs/common/logger/logger.service';
 
 
 @Injectable()
