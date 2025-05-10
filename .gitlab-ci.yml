@@ -1,0 +1,49 @@
+image: node:20
+
+stages:
+  - build
+  - test
+  - deploy
+cache:
+  paths:
+    - node_modules/
+
+
+build_auth_service:
+  stage: build
+  tags: [mydocker-runner]
+  script:
+    - cd microservices/auth-service
+    - npm install
+    - npm run build
+
+build_post_service:
+  stage: build
+  tags: [mydocker-runner]
+  script:
+    - cd microservices/post-service
+    - npm install
+    - npm run build
+
+
+test_auth_service:
+  stage: test
+  tags: [mydocker-runner]
+  script:
+    - cd microservices/auth-service
+    - npm install
+    - npm run test
+
+test_post_service:
+  stage: test
+  tags: [mydocker-runner]
+  script:
+    - cd microservices/post-service
+    - npm install
+    - npm run test
+
+deploy_job:
+    stage: deploy
+    tags: [mydocker-runner]
+    script: 
+      - echo "---Deploy is Completed---"  
