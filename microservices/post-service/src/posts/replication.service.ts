@@ -85,7 +85,7 @@ export class ReplicationService {
                 }
             }
 
-            this.customLogger.log(`✅ Репликация завершена: ${posts.length} постов обработано`, 'replictaion Service');
+            this.customLogger.log(` Репликация завершена: ${posts.length} постов обработано`, 'replictaion Service');
 
 
         } catch (err) {

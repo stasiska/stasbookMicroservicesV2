@@ -19,7 +19,7 @@ export class PostsService {
     private readonly logger: CustomLogger
 ){}
 
-    async createPost (request: CreatePostDto) {
+    async createPost (request: CreatePostDto): Promise<Post> {
 
         const post = await this.prismaService.post.create({
             data: {
@@ -44,7 +44,7 @@ export class PostsService {
         return mapPost(post)
     }
 
-    async getPostById (request: GetPostByIdDto){
+    async getPostById (request: GetPostByIdDto): Promise<Post>{
 
         const postFromCache: Post = await this.cacheService.get(request.postId)
         if (postFromCache) {
@@ -73,7 +73,7 @@ export class PostsService {
     }
 
 
-    async getPostByUserId(request: GetPostByUserIdDto) {
+    async getPostByUserId(request: GetPostByUserIdDto): Promise<Posts> {
         const post = await this.prismaService.post.findMany({
             where: {
                 authorId: request.authorId
@@ -96,7 +96,7 @@ export class PostsService {
         return {posts: mapManyPosts(post)}
     }
 
-    async likePost(request: LikePostDto) {
+    async likePost(request: LikePostDto): Promise<Post> {
 
         const existLike = await this.prismaService.like.findFirst({
             where: {
@@ -145,7 +145,7 @@ export class PostsService {
         return mapPost(likePost);
     }
 
-    async commentPost(request: CommentPostDto) {
+    async commentPost(request: CommentPostDto): Promise<Post> {
         const postExist = await this.prismaService.post.findUnique({
             where: {
                 id: request.postId
@@ -181,7 +181,7 @@ export class PostsService {
         return mapPost(post);
     }
 
-    async getAllPosts(request: PaginationDto) {
+    async getAllPosts(request: PaginationDto): Promise<Posts> {
         
        const cachedPosts: Post[] =  await this.cacheService.get('listFirstPosts')
         

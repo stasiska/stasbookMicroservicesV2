@@ -1,4 +1,4 @@
-import { AuthorIdDto, CreateGroupDto, FriendDto, UserIdReq,  } from '../interface/social_service';
+import { AuthorIdDto, CreateGroupDto, FriendDto, FriendRes, UserIdReq, UserList,  } from '../interface/social_service';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RabbitMQService } from '../libs/queue/index'
@@ -13,7 +13,7 @@ export class SocialService {
         
     }
 
-    async ExistFriendOrFollow(request: UserIdReq) {
+    async ExistFriendOrFollow(request: UserIdReq): Promise<UserList> {
         const friends = await this.prismaService.friend.findMany({
             where: {
                 accepted: true,
@@ -43,7 +43,7 @@ export class SocialService {
     }
 
 
-    async addFriend(request: FriendDto) {
+    async addFriend(request: FriendDto): Promise<FriendRes> {
         await this.prismaService.friend.create({
             data: {
                 requesterId: request.requesterId,
@@ -54,7 +54,7 @@ export class SocialService {
         return {status: '200'}
     }
 
-    async removeFriend(request: FriendDto) {
+    async removeFriend(request: FriendDto): Promise<FriendRes> {
         await this.prismaService.friend.deleteMany({
             where: {
               requesterId: request.requesterId,
