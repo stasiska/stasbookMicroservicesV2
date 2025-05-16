@@ -1,17 +1,18 @@
 import { PostServiceClientService } from '../grpcClients/post-service-client.service';
 import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 //import { S3Service } from '@lib/s3/dist/index';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'process';
 import { CreatePostDto } from './dto/createPostDto';
+import { Post, Posts } from './types/post_service';
 @Injectable()
 export class PostService {
     constructor(private readonly postServiceClientService: PostServiceClientService,
         private readonly config: ConfigService
     ) {}
 
-    async getAllPosts(page: number, size: number) {
+    async getAllPosts(page: number, size: number): Promise<Posts> {
         try {
             const res = await firstValueFrom(this.postServiceClientService.getAllPosts({page: page ? page : 1 , size: size ? size : 7})) 
             return res
@@ -22,7 +23,7 @@ export class PostService {
 
     }
 
-    async createPost(file,userId: string, dto: CreatePostDto) {
+    async createPost(file,userId: string, dto: CreatePostDto): Promise<Post> {
         // const s3 = new S3Service({
         //     endpoint: this.config.getOrThrow('S3_ENDPOINT'),
         //     region: this.config.getOrThrow('S3_REGION'),
@@ -42,7 +43,7 @@ export class PostService {
     }
 
 
-    async getPostById(postId: string) {
+    async getPostById(postId: string): Promise<Post> {
         try {
             const res = await firstValueFrom(this.postServiceClientService.getPostById({
                 postId: postId
@@ -53,7 +54,7 @@ export class PostService {
         }
     }
 
-    async getPostsByUserId(userId: string) {
+    async getPostsByUserId(userId: string): Promise<Posts> {
         try {
             const res = await firstValueFrom(this.postServiceClientService.getPostByUserId({
                 authorId: userId
@@ -64,7 +65,7 @@ export class PostService {
         }
     }
 
-    async likePost(postId: string, userId: string) {
+    async likePost(postId: string, userId: string): Promise<Post> {
         try {
             const res = await firstValueFrom(this.postServiceClientService.likePost({userId: userId, postId: postId}))
             return res
@@ -73,7 +74,7 @@ export class PostService {
         }
     }
 
-    async commentPost(userId: string, dto){
+    async commentPost(userId: string, dto): Promise<Post>{
         try {
             const res = await firstValueFrom(this.postServiceClientService.commentPost({
                 userId: userId,
