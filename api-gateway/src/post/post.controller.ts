@@ -6,7 +6,7 @@ import { Authorized } from "../auth2/decorators/authorized.decorator";
 import { CreatePostDto } from "./dto/createPostDto";
 import { ApiBody, ApiConsumes, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { CommentPostDto, LikePostDto, PostDto } from "./types/types";
-
+import { Post as IPost, Posts } from './types/post_service';
 @Controller('post-service')
 export class PostController {
     constructor(private readonly postService: PostService) { }
@@ -31,7 +31,7 @@ export class PostController {
     async createPost(@UploadedFile() file,
         @Authorized('id') userId: string,
         @Body() dto: CreatePostDto
-    ) {
+    ): Promise<IPost> {
         return this.postService.createPost(file, userId, dto)
 
     }
@@ -50,7 +50,7 @@ export class PostController {
         description: 'Пост не найден',
     })
     @Get(':id')
-    async getPostById(@Param('id') id: string) {
+    async getPostById(@Param('id') id: string): Promise<IPost> {
         return this.postService.getPostById(id)
     }
 
@@ -68,7 +68,7 @@ export class PostController {
         description: 'Пользователь не найдены',
     })
     @Get('user/:id')
-    async getPostsByUserId(@Param('id') id: string) {
+    async getPostsByUserId(@Param('id') id: string): Promise<Posts> {
         return this.postService.getPostsByUserId(id)
     }
 
@@ -95,7 +95,7 @@ export class PostController {
     async doLike(
         @Body() dto: LikePostDto,
         @Authorized('id') userId: string,
-    ) {
+    ): Promise<IPost> {
         return this.postService.likePost(dto.postId, userId)
     }
 
@@ -121,7 +121,7 @@ export class PostController {
     @Post('comment')
     async addComment(@Body() dto: any,
         @Authorized('id') userId: string
-    ) {
+    ): Promise<IPost> {
         return this.postService.commentPost(userId, dto);
     }
 
@@ -137,7 +137,7 @@ export class PostController {
     @Get()
     async getAllPosts(@Query('limit') limit?: number,
         @Query('page') page?: number,
-    ) {
+    ): Promise<Posts> {
         return this.postService.getAllPosts(page, limit)
     }
 }

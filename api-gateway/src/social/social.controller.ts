@@ -3,6 +3,7 @@ import { SocialService } from "./social.service";
 import { AuthGuard } from "src/guards/auth.guard";
 import { Authorized } from "src/auth2/decorators/authorized.decorator";
 import { ApiOperation } from "@nestjs/swagger";
+import { FriendRes, UserList } from "./types/social_service";
 
 @Controller('social-service')
 export class SocialController {
@@ -14,7 +15,7 @@ export class SocialController {
     })
     @UseGuards(AuthGuard)
     @Get('getFriendsById')
-    async getUsersById(@Authorized('id') userId: string,) {
+    async getUsersById(@Authorized('id') userId: string,): Promise<UserList> {
         return this.socialService.getFriendsById(userId)
     }
 
@@ -25,7 +26,7 @@ export class SocialController {
     @UseGuards(AuthGuard)
     @Post('addFriend')
     async addFriend(@Authorized('id') userId: string,
-        @Body() dto: any) {
+        @Body() dto: any): Promise<FriendRes> {
         return this.socialService.addFriend(userId, dto.targetId)
     }
     

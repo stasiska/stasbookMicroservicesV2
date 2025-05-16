@@ -5,13 +5,14 @@ import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
 import { RegisterDto } from './dto/register.dto';
 import { ConfirmationDto } from './dto/email-confirmation.dto';
+import { User } from './types/auth_service';
 
 @Injectable()
 export class AuthService {
     constructor(private readonly authServiceClientService: AuthServiceClientService
     ) { }
 
-    async getUserById(id: string) {
+    async getUserById(id: string): Promise<User> {
         return await firstValueFrom(this.authServiceClientService.getUserById({ id: id }))
     }
 
