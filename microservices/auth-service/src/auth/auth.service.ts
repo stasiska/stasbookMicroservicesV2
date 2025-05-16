@@ -29,7 +29,7 @@ export class AuthService {
     ) { }
 
     
-    public async register(dto: RegisterDto) {
+    public async register(dto: RegisterDto): Promise<User> {
         const isExists = await this.userService.findByEmail(dto.email)
 
         if (isExists) {
@@ -51,7 +51,7 @@ export class AuthService {
     }
 
 
-    public async login(dto) {
+    public async login(dto): Promise<User> {
         const user = await this.userService.findByEmail(dto.email)
         if (!user || !user.password) {
             
@@ -83,7 +83,7 @@ export class AuthService {
     public async extractProfileFromCode(
         provider: string,
         code: string
-    ) {
+    ): Promise<User> {
         const providerInstance = this.provderSerivce.findByService(provider)
         const profile = await providerInstance.findUserByCode(code)
         const account = await this.db.select().from(schema.account).where(and(
@@ -141,7 +141,7 @@ export class AuthService {
     }
 
 
-    public async checkProfile(userId:string) {
+    public async checkProfile(userId:string): Promise<User> {
         const user  = await this.userService.checkProfile(userId)
         return user
     }
